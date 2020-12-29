@@ -1,0 +1,21 @@
+
+1- create spring-boot project
+
+2-change server.port=8081
+
+3. create docker file
+
+4. build docker file
+$ docker build -f Dockerfile -t sezayir/springboot:v1 .
+
+$ docker image ls
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+sezayir/springboot-ws         v1                  d6e25bc89bd8        26 seconds ago      645MB
+
+5-expose
+
+$ docker run   -p 8080:8081 sezayir/springboot:v1
+
+6- Test
+http://localhost:8080/
+
