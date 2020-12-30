@@ -1,0 +1,25 @@
+
+$docker tag baa486181d68  sezayir/myspringboot-image:v1
+$docker images
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+myspringboot-image            v1                  baa486181d68        51 years ago        215MB
+myspringboot-image            v2                  baa486181d68        51 years ago        215MB
+
+$ docker login
+	Authenticating with existing credentials...
+	Login Succeeded
+
+# Run docker push to push the tagged image to Docker Hub.
+
+PS D:\java-kubernetes\2-Dockerize a Spring Boot application using Jib\demo> docker push sezayir/myspringboot-image:v1
+The push refers to repository [docker.io/sezayir/myspringboot-image]
+2a996f34b596: Pushed
+5571a4d9f8f4: Pushed
+21936b8f7233: Pushing [=================>                                 ]  5.951MB/17.09MB
+02d54fab344a: Pushing [======>                                            ]  21.52MB/170.2MB
+0a14b263fc87: Pushed
+231bdbae9aea: Pushed
+e2db5f1bf240: Pushing [================================>                  ]  9.866MB/15.07MB
+7a5b9c0b4b14: Pushing [==================================================>]  3.031MB
+
+

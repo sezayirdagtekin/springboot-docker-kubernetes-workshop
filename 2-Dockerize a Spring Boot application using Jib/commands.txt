@@ -1,0 +1,97 @@
+
+1- create spring-boot project
+
+2-change server.port=8081
+
+3. Add jib plugin to pom.xml
+
+
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>2.7.0</version>
+				<configuration>
+					<to>
+						<image>myspringboot-image:v1</image>
+					</to>
+					<container>
+						<ports>
+							<port>8081</port>
+						</ports>
+					</container>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>dockerBuild</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+
+4.
+ 
+<servers>
+    <server>
+        <id>registry.hub.docker.com</id>
+        <username>username></username>
+        <password>pasw</password>
+    </server>
+</servers>
+
+ 5.  package
+
+ $ mvn clean package
+   or
+  $ mvn clean jib:package
+ 
+ ....
+ 
+[INFO]
+[INFO] Containerizing application to Docker daemon as myspringboot-image:v1...
+[WARNING] Base image 'gcr.io/distroless/java:11' does not use a specific image digest - build may not be reproducible
+[INFO] Using base image with digest: sha256:233c172a24c8fb14982cff3bebe687f5fe0e3a62166678d9384f9eaa0a07a034
+[INFO]
+[INFO] Container entrypoint set to [java, -cp, /app/resources:/app/classes:/app/libs/*, com.sezayir.demo.DemoApplication]
+[INFO]
+[INFO] Built image to Docker daemon as myspringboot-image:v1
+[INFO] Executing tasks:
+[INFO] [==============================] 100,0% complete
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  46.504 s
+[INFO] Finished at: 2020-12-30T09:41:42+03:00
+[INFO] ------------------------------------------------------------------------
+
+
+
+$ docker image ls
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+myspringboot-image            v1                  baa486181d68        51 years ago        215MB
+
+
+
+$  docker run  -p 8080:8081 myspringboot-image:v1
+
+
+
+$  docker image history myspringboot-image
+IMAGE               CREATED             CREATED BY               SIZE                COMMENT
+dfa0d7b570fd        51 years ago        jib-maven-plugin:2.7.0   1.33kB              classes
+<missing>           51 years ago        jib-maven-plugin:2.7.0   17B                 resources
+<missing>           51 years ago        jib-maven-plugin:2.7.0   17.1MB              dependencies
+<missing>           51 years ago        bazel build ...          170MB
+<missing>           51 years ago        bazel build ...          8.41MB
+<missing>           51 years ago        bazel build ...          1.93MB
+<missing>           51 years ago        bazel build ...          15.1MB
+<missing>           51 years ago        bazel build ...          1.79MB
+
+
+test:
+http://localhost:8080/hello
