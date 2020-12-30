@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting-deployment
+  labels:
+    app: greeting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: greeting
+  template:
+    metadata:
+      labels:
+        app: greeting
+    spec:
+      containers:
+      - name: greeting
+        image: sezayir/myspringboot-image:v1
+        ports:
+        - containerPort: 8081
