@@ -1,0 +1,56 @@
+----------------------------------------------------------------------------------------------------------
+
+#Creating a Chart 
+
+$  helm create greeting-helm
+
+
+
+$ cd  greeting-helm
+$ ls
+
+    Directory: D:\java-kubernetes\4-helm\greeting-helm
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        31.12.2020     08:59                charts
+d-----        31.12.2020     08:59                templates
+-a----        31.12.2020     08:59            349 .helmignore
+-a----        31.12.2020     08:59           1104 Chart.yaml
+-a----        31.12.2020     08:59           1806 values.yaml
+
+
+#Let's edit the file deployment.yaml  and service.yaml
+#Providing Values
+
+service:
+  type: LoadBalancer
+  port: 8080
+
+
+...
+
+image:
+  repository: sezayir/myspringboot-image
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1"
+
+#Firstly, this is a simple command that takes the path to a chart and runs a battery of tests to ensure that the chart is well-formed:
+
+$ helm lint  greeting-helm
+==> Linting greeting-helm
+[INFO] Chart.yaml: icon is recommended
+
+1 chart(s) linted, 0 chart(s) failed
+
+
+#Helm Template
+#Also, we have this command to render the template locally, without a Tiller Server, for quick feedback:
+
+PS D:\java-kubernetes\4-helm> helm template greeting-helm
+#Open minkube tunnel
+$ minikube tunnel
+
+#Helm Install
+#Once we've verified the chart to be fine, finally, we can run this command to install the chart into the Kubernetes cluster:

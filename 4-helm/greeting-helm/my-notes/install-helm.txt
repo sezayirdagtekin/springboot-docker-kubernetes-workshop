@@ -1,0 +1,18 @@
+
+#Installing Helm
+
+$ choco install kubernetes-helm
+
+#
+This installs the Helm Client locally.
+
+Now, we need to initialize Helm CLI, which effectively also installs the Tiller Server onto a Kubernetes cluster as identified through the Kubernetes configuration.
+Please ensure that the Kubernetes cluster is running and accessible through kubectl before initializing Helm:
+
+#
+
+$ kubectl cluster-info
+	Kubernetes control plane is running at https://127.0.0.1:32768
+	KubeDNS is running at https://127.0.0.1:32768/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+
