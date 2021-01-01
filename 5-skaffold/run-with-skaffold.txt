@@ -4,8 +4,15 @@
 apiVersion: skaffold/v1beta2
 kind: Config
 build:
+  local:
+    push: false
+# Generated artifact
   artifacts:
   - image: sezayir/myspringboot-image
+# Use jibMaven
+    jibMaven: {}
+    
+# Execute deployment.yml    
 deploy:
   kubectl:
     manifests:
@@ -17,23 +24,23 @@ $  minikube tunnel
 
 # 3-RUN with command  $ skaffold dev
 
-PS D:\java-kubernetes\skaffold\demo> skaffold dev
+PS D:\java-kubernetes\5-skaffold\demo> skaffold dev
 Listing files to watch...
  - sezayir/myspringboot-image
 Generating tags...
- - sezayir/myspringboot-image -> sezayir/myspringboot-image:61de912-dirty
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:6253e08-dirty
 Checking cache...
  - sezayir/myspringboot-image: Found Locally
 Tags used in deployment:
- - sezayir/myspringboot-image -> sezayir/myspringboot-image:4e1e644eb33ab872f671887ce98aa480a548597cdbea9c6f088151a8e38a761c
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:23bc4bd9343ed8768aa48be64ed4d73fbb6195d905fb1a2ac5f7bf02f57d9d13
 Starting deploy...
  - deployment.apps/greeting-deployment created
  - service/greeting-service created
 Waiting for deployments to stabilize...
  - deployment/greeting-deployment: creating container greeting
-    - pod/greeting-deployment-5d657f99bf-5hknp: creating container greeting
+    - pod/greeting-deployment-59bd84b7d8-ks5t8: creating container greeting
  - deployment/greeting-deployment is ready.
-Deployments stabilized in 6.0853907s
+Deployments stabilized in 9.208251s
 Press Ctrl+C to exit
 Watching for changes...
 [greeting]
@@ -45,17 +52,19 @@ Watching for changes...
 [greeting]  =========|_|==============|___/=/_/_/_/
 [greeting]  :: Spring Boot ::                (v2.4.1)
 [greeting]
-[greeting] 2021-01-01 09:53:58.360  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : Starting DemoApplication v0.0.1-SNAPSHOT using Java 11.0.9.1 on greeting-deployment-5d657f99bf-5hknp with PID 1 (/application.jar started by root in /)
-[greeting] 2021-01-01 09:53:58.364  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : No active profile set, falling back to default profiles: default
-[greeting] 2021-01-01 09:54:00.067  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
-[greeting] 2021-01-01 09:54:00.109  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-[greeting] 2021-01-01 09:54:00.109  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
-[greeting] 2021-01-01 09:54:00.244  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-[greeting] 2021-01-01 09:54:00.244  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1792 ms
-[greeting] 2021-01-01 09:54:00.935  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-[greeting] 2021-01-01 09:54:01.454  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
-[greeting] 2021-01-01 09:54:01.468  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : Started DemoApplication in 4.209 seconds (JVM running for 5.409)
-
+[greeting] 2021-01-01 13:52:15.840  INFO 1 --- [  restartedMain] com.sezayir.demo.DemoApplication         : Starting DemoApplication using Java 11.0.6 on greeting-deployment-59bd84b7d8-ks5t8 with PID 1 (/app/classes started by root in /)
+[greeting] 2021-01-01 13:52:15.844  INFO 1 --- [  restartedMain] com.sezayir.demo.DemoApplication         : No active profile set, falling back to default profiles: default
+[greeting] 2021-01-01 13:52:15.920  INFO 1 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[greeting] 2021-01-01 13:52:15.920  INFO 1 --- [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[greeting] 2021-01-01 13:52:17.938  INFO 1 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+[greeting] 2021-01-01 13:52:17.967  INFO 1 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+[greeting] 2021-01-01 13:52:17.968  INFO 1 --- [  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+[greeting] 2021-01-01 13:52:18.092  INFO 1 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+[greeting] 2021-01-01 13:52:18.092  INFO 1 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2171 ms
+[greeting] 2021-01-01 13:52:18.727  INFO 1 --- [  restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+[greeting] 2021-01-01 13:52:19.015  INFO 1 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+[greeting] 2021-01-01 13:52:19.105  INFO 1 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+[greeting] 2021-01-01 13:52:19.120  INFO 1 --- [  restartedMain] com.sezayir.demo.DemoApplication         : Started DemoApplication in 3.913 seconds (JVM running for 4.616)
 
 
 ---------------------------
@@ -81,3 +90,44 @@ $ kubectl get all
 # 5-TEST
 
 http://localhost:8080/hello
+
+
+# 6-In skaffold pipeline log, you can see it is watching your source code and trigger pipeline as soon as you change anything in your source code.
+
+Generating tags...
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:6253e08-dirty
+Checking cache...
+ - sezayir/myspringboot-image: Found. Tagging
+Tags used in deployment:
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:23bc4bd9343ed8768aa48be64ed4d73fbb6195d905fb1a2ac5f7bf02f57d9d13
+Starting deploy...
+ - deployment.apps/greeting-deployment configured
+Waiting for deployments to stabilize...
+ - deployment/greeting-deployment: creating container greeting
+    - pod/greeting-deployment-6599875584-wzcvv: creating container greeting
+ - deployment/greeting-deployment is ready.
+Deployments stabilized in 9.6820746s
+Watching for changes...
+[greeting] 2021-01-01 14:01:35.977  INFO 1 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+[greeting] 2021-01-01 14:01:35.997  INFO 1 --- [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+[greeting] 2021-01-01 14:01:35.998  INFO 1 --- [  restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+[greeting] 2021-01-01 14:01:36.128  INFO 1 --- [  restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+[greeting] 2021-01-01 14:01:36.128  INFO 1 --- [  restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3461 ms
+[greeting] 2021-01-01 14:01:36.832  INFO 1 --- [  restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+[greeting] 2021-01-01 14:01:37.182  INFO 1 --- [  restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+[greeting] 2021-01-01 14:01:37.226  INFO 1 --- [  restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+[greeting] 2021-01-01 14:01:37.269  INFO 1 --- [  restartedMain] com.sezayir.demo.DemoApplication         : Started DemoApplication in 5.585 seconds (JVM running for 6.258)
+
+
+# 5-TEST AGAIN
+http://localhost:8080/hello
+
+
+
+minikube dashboard
+* Enabling dashboard ...
+* Verifying dashboard health ...
+* Launching proxy ...
+* Verifying proxy health ...
+* Opening http://127.0.0.1:55360/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ in your default browser...
+

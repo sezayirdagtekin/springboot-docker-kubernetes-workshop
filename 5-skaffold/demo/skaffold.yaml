@@ -1,8 +1,15 @@
 apiVersion: skaffold/v1beta2
 kind: Config
 build:
+  local:
+    push: false
+# Generated artifact
   artifacts:
   - image: sezayir/myspringboot-image
+# Use jibMaven
+    jibMaven: {}
+    
+# Execute deployment.yml    
 deploy:
   kubectl:
     manifests:

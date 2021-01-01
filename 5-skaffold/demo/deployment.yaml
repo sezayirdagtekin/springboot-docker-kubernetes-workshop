@@ -17,7 +17,6 @@ spec:
       containers:
       - name: greeting
         image: sezayir/myspringboot-image:v1
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8081
 ---        
