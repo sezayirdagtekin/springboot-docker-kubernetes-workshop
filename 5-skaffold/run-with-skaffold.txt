@@ -1,0 +1,83 @@
+
+# 1- Create  skaffold.yaml
+
+apiVersion: skaffold/v1beta2
+kind: Config
+build:
+  artifacts:
+  - image: sezayir/myspringboot-image
+deploy:
+  kubectl:
+    manifests:
+      - deployment.yaml
+
+
+# 2- DO not forget oppen tunnel for minikube
+$  minikube tunnel
+
+# 3-RUN with command  $ skaffold dev
+
+PS D:\java-kubernetes\skaffold\demo> skaffold dev
+Listing files to watch...
+ - sezayir/myspringboot-image
+Generating tags...
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:61de912-dirty
+Checking cache...
+ - sezayir/myspringboot-image: Found Locally
+Tags used in deployment:
+ - sezayir/myspringboot-image -> sezayir/myspringboot-image:4e1e644eb33ab872f671887ce98aa480a548597cdbea9c6f088151a8e38a761c
+Starting deploy...
+ - deployment.apps/greeting-deployment created
+ - service/greeting-service created
+Waiting for deployments to stabilize...
+ - deployment/greeting-deployment: creating container greeting
+    - pod/greeting-deployment-5d657f99bf-5hknp: creating container greeting
+ - deployment/greeting-deployment is ready.
+Deployments stabilized in 6.0853907s
+Press Ctrl+C to exit
+Watching for changes...
+[greeting]
+[greeting]   .   ____          _            __ _ _
+[greeting]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[greeting] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[greeting]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[greeting]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[greeting]  =========|_|==============|___/=/_/_/_/
+[greeting]  :: Spring Boot ::                (v2.4.1)
+[greeting]
+[greeting] 2021-01-01 09:53:58.360  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : Starting DemoApplication v0.0.1-SNAPSHOT using Java 11.0.9.1 on greeting-deployment-5d657f99bf-5hknp with PID 1 (/application.jar started by root in /)
+[greeting] 2021-01-01 09:53:58.364  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : No active profile set, falling back to default profiles: default
+[greeting] 2021-01-01 09:54:00.067  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+[greeting] 2021-01-01 09:54:00.109  INFO 1 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+[greeting] 2021-01-01 09:54:00.109  INFO 1 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+[greeting] 2021-01-01 09:54:00.244  INFO 1 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+[greeting] 2021-01-01 09:54:00.244  INFO 1 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1792 ms
+[greeting] 2021-01-01 09:54:00.935  INFO 1 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+[greeting] 2021-01-01 09:54:01.454  INFO 1 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path ''
+[greeting] 2021-01-01 09:54:01.468  INFO 1 --- [           main] com.sezayir.demo.DemoApplication         : Started DemoApplication in 4.209 seconds (JVM running for 5.409)
+
+
+
+---------------------------
+
+# 4- HEALT CHECK
+
+
+$ kubectl get all
+    NAME                                       READY   STATUS    RESTARTS   AGE
+	pod/greeting-deployment-54775d45d8-dlpdr   1/1     Running   0          24s
+
+	NAME                       TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+	service/greeting-service   LoadBalancer   10.111.169.207   127.0.0.1     8080:31336/TCP   5m22s
+	service/kubernetes         ClusterIP      10.96.0.1        <none>        443/TCP          9m44s
+
+	NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+	deployment.apps/greeting-deployment   1/1     1            1           5m22s
+
+	NAME                                             DESIRED   CURRENT   READY   AGE
+	replicaset.apps/greeting-deployment-54775d45d8   1         1         1       24s
+
+
+# 5-TEST
+
+http://localhost:8080/hello
